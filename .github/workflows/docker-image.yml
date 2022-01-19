@@ -22,7 +22,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - name: Run Snyk to check Docker images for vulnerabilities
-      uses: snyk/actions/docker@master
+      uses: snyk/actions/docker@main
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       with:
