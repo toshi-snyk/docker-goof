@@ -1,3 +1,4 @@
+# per https://docs.snyk.io/tutorials/github/securing-a-toolchain-with-snyk-and-github/part-2-container/section-1-containerize-your-app
 name: Docker Image CI
 
 on:
@@ -14,17 +15,17 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-    - name: Build the Docker image
+    - name: Build Docker Image
       run: docker build . --file Dockerfile --tag docker-goof
-
-  security:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-    - name: Run Snyk to check Docker images for vulnerabilities
+    - name: Snyk Container Test
+      continue-on-error: true
       uses: snyk/actions/docker@master
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       with:
         image: docker-goof
         args: --severity-threshold=high
+    - name: Upload Container Scan results to GitHub Code Scanning
+      uses: github/codeql-action/upload-sarif@v1
+      with:
+        sarif_file: snyk.sarif
