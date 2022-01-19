@@ -15,16 +15,16 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag docker-goof:$(date +%s)
+      run: docker build . --file Dockerfile --tag docker-goof
 
   security:
     needs: build
     runs-on: ubuntu-latest
     steps:
     - name: Run Snyk to check Docker images for vulnerabilities
-      uses: snyk/actions/docker@main
+      uses: snyk/actions/docker@master
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       with:
-        image: docker-goof:$(date +%s)
+        image: docker-goof
         args: --severity-threshold=high
