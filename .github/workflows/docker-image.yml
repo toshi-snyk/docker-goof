@@ -18,6 +18,7 @@ jobs:
       run: docker build . --file Dockerfile --tag docker-goof:$(date +%s)
 
   security:
+    needs: build
     runs-on: ubuntu-latest
     steps:
     - name: Run Snyk to check Docker images for vulnerabilities
@@ -25,5 +26,5 @@ jobs:
       env:
         SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
       with:
-        image: your/image-to-test
+        image: docker-goof:$(date +%s)
         args: --severity-threshold=high
