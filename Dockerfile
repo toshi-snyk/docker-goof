@@ -1,3 +1,3 @@
-FROM node:10
+FROM node:10.4.0
 
-RUN apt-get install -y wget
+RUN apt-get install -y imagemagick
