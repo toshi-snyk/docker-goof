@@ -1,3 +1,3 @@
-FROM node:10.4.0
+FROM node:fermium-bullseye-slim
 
 RUN apt-get install -y imagemagick
